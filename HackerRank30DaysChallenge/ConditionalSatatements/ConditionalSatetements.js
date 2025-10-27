@@ -20,8 +20,19 @@ function readLine() {
     return inputString[currentLine++];
 }
 
+function oddEven(n) {
+    (n % 2 !== 0)
+        ? console.log("Weird")
+        : (n % 2 === 0 && n >= 2 && n <= 5)
+            ? console.log("Not Weird")
+            : (n % 2 === 0 && n >= 6 && n <= 20)
+                ? console.log("Weird")
+                : console.log("Not Weird");
+}
+
 
 
 function main() {
     const N = parseInt(readLine().trim(), 10);
+    oddEven(N);
 }
