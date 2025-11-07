@@ -1,0 +1,72 @@
+'use strict';
+
+process.stdin.resume();
+process.stdin.setEncoding('utf-8');
+
+let inputString: string = '';
+let inputLines: string[] = [];
+let currentLine: number = 0;
+
+process.stdin.on('data', function(inputStdin: string): void {
+    inputString += inputStdin;
+});
+
+process.stdin.on('end', function(): void {
+    inputLines = inputString.split('\n');
+    inputString = '';
+    main();
+});
+
+function readLine(): string {
+    return inputLines[currentLine++];
+}
+
+// Rename Node to TreeNode to avoid conflicts
+class TreeNode {
+    data: number;
+    left: TreeNode | null;
+    right: TreeNode | null;
+
+    constructor(data: number) {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+// Insert function to build BST
+function insert(root: TreeNode | null, data: number): TreeNode {
+    if (!root) {
+        return new TreeNode(data);
+    }
+
+    if (data < root.data) {
+        root.left = insert(root.left, data);
+    } else {
+        root.right = insert(root.right, data);
+    }
+
+    return root;
+}
+
+// Function to calculate BST height
+function getHeight(root: TreeNode | null): number {
+    if (!root) return -1; // base case: empty tree has height -1
+    const leftHeight = getHeight(root.left);
+    const rightHeight = getHeight(root.right);
+    return Math.max(leftHeight, rightHeight) + 1;
+}
+
+// Main function
+function main() {
+    const n = parseInt(readLine(), 10);
+    let root: TreeNode | null = null;
+
+    for (let i = 0; i < n; i++) {
+        const data = parseInt(readLine(), 10);
+        root = insert(root, data);
+    }
+
+    console.log(getHeight(root));
+}
+
